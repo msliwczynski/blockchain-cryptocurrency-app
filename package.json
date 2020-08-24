@@ -4,6 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node ./app",
+    "dev": "nodemon ./app",
     "test": "jest --watchAll",
     "dev-test": "nodemon dev-test"
   },
@@ -15,6 +17,7 @@
     "nodemon": "^2.0.2"
   },
   "dependencies": {
-    "crypto-js": "^4.0.0"
+    "crypto-js": "^4.0.0",
+    "express": "^4.17.1"
   }
 }
