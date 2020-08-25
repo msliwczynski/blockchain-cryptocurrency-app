@@ -23,8 +23,18 @@ class Transaction {
         address: recipient
       }
     ])
-    console.log('transaction', transaction);
+    Transaction.signTransaction(transaction, senderWallet);
+
     return transaction;
+  }
+
+  static signTransaction(transaction, senderWallet) {
+    transaction.input = {
+      timestampt: Date.now(),
+      amount: senderWallet.balance,
+      address: senderWallet.publicKey,
+      signature: senderWallet.sign(ChainUtil.hash(transaction.outputs))
+    }
   }
 }
 
