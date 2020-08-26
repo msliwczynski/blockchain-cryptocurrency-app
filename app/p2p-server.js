@@ -50,13 +50,13 @@ class P2pServer {
           this.blockchain.replaceChain(data.chain);
           break;
         case MESSAGE_TYPES.transaction:
-          this.transactionPool.updateOrAddTransaction(data.transaction)
+          this.transactionPool.updateOrAddTransaction(data.transaction);
           break;
         case MESSAGE_TYPES.clear_transactions:
           this.transactionPool.clear();
           break;
       }
-    })
+    });
   }
 
   sendChain(socket) {
@@ -74,7 +74,7 @@ class P2pServer {
   }
 
   syncChains() {
-    this.sockets.forEach(socket => this.sendChain(socket))
+    this.sockets.forEach(socket => this.sendChain(socket));
   }
 
   broadcastTransaction(transaction) {
@@ -82,9 +82,9 @@ class P2pServer {
   }
 
   broadcastClearTransactions() {
-    this.sockets.forEach(socket => this.send(JSON.stringify({
+    this.sockets.forEach(socket => socket.send(JSON.stringify({
       type: MESSAGE_TYPES.clear_transactions
-    })))
+    })));
   }
 }
 
