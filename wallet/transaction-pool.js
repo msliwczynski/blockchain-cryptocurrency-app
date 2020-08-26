@@ -6,7 +6,7 @@ class TransactionPool {
   }
 
   updateOrAddTransaction(transaction) {
-    let transactionWithId = this.transactions.find(t => t.is === transaction.id);
+    let transactionWithId = this.transactions.find(t => t.id === transaction.id);
     if (transactionWithId) {
       this.transactions[this.transactions.indexOf(transactionWithId)] = transaction;
     } else {
@@ -30,12 +30,12 @@ class TransactionPool {
       }
 
       if (!Transaction.verifyTransaction(transaction)) {
-        console.log(`Invalid signature from ${transaction.input.address}.`);
+        console.log(`Invalid signature from ${transaction.input.address}.`)
         return;
-      }
+      };
 
       return transaction;
-    })
+    });
   }
 
   clear() {
