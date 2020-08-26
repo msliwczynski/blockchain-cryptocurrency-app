@@ -1,14 +1,14 @@
-const Wallet = require('./index')
-const TransactionPool = require('./transaction-pool')
-const Blockchain = require('../blockchain');
+const Wallet = require('./index');
+const TransactionPool = require('./transaction-pool');
+const Blockchain = require('../blockchain');;
 const { INITIAL_BALANCE } = require('../config');
 
 describe('Wallet', () => {
-  let tp, wallet, bc;
+  let wallet, tp, bc;
 
   beforeEach(() => {
-    tp = new TransactionPool();
     wallet = new Wallet();
+    tp = new TransactionPool();
     bc = new Blockchain();
   })
 
@@ -42,7 +42,6 @@ describe('Wallet', () => {
 
       beforeEach(() => {
         senderWallet = new Wallet();
-        tp = new TransactionPool();
         addBalance = 100;
         repeatAdd = 3;
         for (let i = 0; i < repeatAdd; i++) {
@@ -59,12 +58,12 @@ describe('Wallet', () => {
         expect(senderWallet.calculateBalance(bc)).toEqual(INITIAL_BALANCE - (addBalance * repeatAdd));
       });
       describe('an the recipient conducts a transactions', () => {
-        let substractBalance, recipientBalance;
+        let subtractBalance, recipientBalance;
         beforeEach(() => {
           tp.clear();
-          substractBalance = 60;
+          subtractBalance = 60;
           recipientBalance = wallet.calculateBalance(bc);
-          wallet.createTransaction(senderWallet.publicKey, substractBalance, bc, tp);
+          wallet.createTransaction(senderWallet.publicKey, subtractBalance, bc, tp);
           bc.addBlock(tp.transactions);
         })
 
@@ -72,9 +71,10 @@ describe('Wallet', () => {
           beforeEach(() => {
             tp.clear();
             senderWallet.createTransaction(wallet.publicKey, addBalance, bc, tp);
+            bc.addBlock(tp.transactions);
           })
           it('calculate the recipient balance only using transactions since its most recent one', () => {
-            expect(wallet.calculateBalance(bc)).toEqual(recipientBalance - substractBalance + addBalance);
+            expect(wallet.calculateBalance(bc)).toEqual(recipientBalance - subtractBalance + addBalance);
           })
         })
 
